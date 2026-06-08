@@ -2,6 +2,7 @@ actual_vs_prediksi.png
 residual_plot.png
 feature_importance.png
 MLProject/saved_models/best_model.pkl
+Membangun_model/saved_models/best_model.pkl
 bukti alerting Grafana/
 bukti monitoring Grafana/
 bukti monitoring Prometheus/
@@ -9,3 +10,5 @@ Monitoring dan Logging/
 mlartifacts/
 mlflow.db
 mlruns/
+echo "saved_models/" >> .gitignore
+echo "*.pkl" >> .gitignore
