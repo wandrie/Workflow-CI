@@ -1,12 +1,13 @@
-name: MLflow Training CI
+name: MLOps Python CI Pipeline
 
 on:
   push:
-    branches:
-      - main
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
 
 jobs:
-  train:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -16,10 +17,15 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Install Dependencies
         run: |
-          pip install -r Membangun_model/requirements.txt
+          python -m pip install --upgrade pip
+          pip install numpy pandas scikit-learn joblib mlflow matplotlib seaborn prometheus-client flask flask-restx psutil flake8
 
-      - name: Run MLflow Training
+      - name: Lint with flake8
+        run: |
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+
+      - name: Run Training Pipeline
         run: |
           python Membangun_model/modelling.py
