@@ -9,4 +9,4 @@ Monitoring dan Logging/
 mlartifacts/
 mlflow.db
 mlruns/
-.github/
+.github/Membangun_model/saved_models/
