@@ -111,14 +111,14 @@ def train_with_autolog(X_train, X_test, y_train, y_test, model, model_name):
         r2_test = model.score(X_test, y_test)
         return model, r2_test
 
-    active_run = mlflow.active_run()
+    # DETEKSI LINGKUNGAN CI/CD
+    is_ci_cd = os.getenv("GITHUB_ACTIONS") is not None
 
-    if active_run:
-        print(f" -> Menggunakan run aktif: {active_run.info.run_id}")
+    if is_ci_cd or mlflow.active_run():
+        print(f" -> CI/CD terdeteksi atau Run aktif ditemukan: {mlflow.active_run().info.run_id}")
         return execute_training()
     
     else:
-        print(" -> Tidak ada run aktif, membuat run baru...")
         with mlflow.start_run(run_name=model_name):
             return execute_training()
     
