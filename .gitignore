@@ -6,7 +6,7 @@ bukti alerting Grafana/
 bukti monitoring Grafana/
 bukti monitoring Prometheus/
 Monitoring dan Logging/data/
-saved_models/
+mlartifacts/
 mlflow.db
 mlruns/
 .github/
