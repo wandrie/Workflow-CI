@@ -105,6 +105,7 @@ def log_custom_plots(y_test, y_pred, model, feature_names):
 
 def train_with_autolog(X_train, X_test, y_train, y_test, model, model_name):
     def execute_training():
+        # Lakukan training
         model.fit(X_train, y_train)
         y_pred_test = model.predict(X_test)
         
@@ -115,12 +116,12 @@ def train_with_autolog(X_train, X_test, y_train, y_test, model, model_name):
         print(f" -> Berhasil: {model_name} diproses.")
         return model, r2_test
 
-    active_run = mlflow.active_run()
-    
-    if active_run:
-        print(f" -> Menggunakan run yang aktif: {active_run.info.run_id}")
+    # Eksekusi training
+    if mlflow.active_run():
+        print(f" -> Menggunakan run aktif: {mlflow.active_run().info.run_id}")
         return execute_training()
     else:
+        # Jika dijalankan manual di lokal, buat run baru
         with mlflow.start_run(run_name=model_name):
             return execute_training()
     
