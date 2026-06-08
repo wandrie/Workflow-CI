@@ -15,8 +15,12 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 # MLFLOW CONFIGURATION
 # ============================================
 
+if os.getenv("GITHUB_ACTIONS"):
+    # Di GitHub, simpan log ke folder lokal (default mlruns)
+    mlflow.set_tracking_uri(None) 
+else:
 # Set tracking URI ke localhost
-mlflow.set_tracking_uri("http://127.0.0.1:5000/")
+    mlflow.set_tracking_uri("http://127.0.0.1:5000/")
 
 # Set experiment name
 mlflow.set_experiment("Sistem Pendeteksi Harga Rumah di California")
