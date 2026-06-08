@@ -26,8 +26,6 @@ else:
 # Set experiment name
 mlflow.set_experiment("Sistem Pendeteksi Harga Rumah di California")
 
-mlflow.sklearn.autolog(log_models=True)
-
 # ============================================
 # LOAD DATA
 # ============================================
@@ -104,24 +102,18 @@ def log_custom_plots(y_test, y_pred, model, feature_names):
 # ============================================
 
 def train_with_autolog(X_train, X_test, y_train, y_test, model, model_name):
+    mlflow.sklearn.autolog(log_models=True) 
+    
     def execute_training():
-        # Lakukan training
         model.fit(X_train, y_train)
         y_pred_test = model.predict(X_test)
-        
-        # Log plot kustom
         log_custom_plots(y_test, y_pred_test, model, X_train.columns)
-        
         r2_test = model.score(X_test, y_test)
-        print(f" -> Berhasil: {model_name} diproses.")
         return model, r2_test
-
-    # Eksekusi training
+    
     if mlflow.active_run():
-        print(f" -> Menggunakan run aktif: {mlflow.active_run().info.run_id}")
         return execute_training()
     else:
-        # Jika dijalankan manual di lokal, buat run baru
         with mlflow.start_run(run_name=model_name):
             return execute_training()
     
