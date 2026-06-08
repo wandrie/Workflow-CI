@@ -2,3 +2,11 @@ actual_vs_prediksi.png
 residual_plot.png
 feature_importance.png
 saved_models/best_model.pkl
+bukti alerting Grafana/
+bukti monitoring Grafana/
+bukti monitoring Prometheus/
+Monitoring dan Logging/data/
+saved_models/
+mlflow.db
+mlruns/
+.github/

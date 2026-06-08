@@ -27,10 +27,10 @@ mlflow.sklearn.autolog(log_models=True)
 # LOAD DATA
 # ============================================
 
-def load_processed_data(base_path='preprocessing'):
-    """Membaca data dari folder preprocessing"""
-    train_path = os.path.join(base_path, "train_processed.csv")
-    test_path = os.path.join(base_path, "test_processed.csv")
+def load_processed_data():
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    train_path = os.path.join(current_dir, "train_processed.csv")
+    test_path = os.path.join(current_dir, "test_processed.csv")
 
     if not os.path.exists(train_path) or not os.path.exists(test_path):
         base_path = "california_housing_preprocessing"

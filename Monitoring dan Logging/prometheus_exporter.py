@@ -37,7 +37,7 @@ if __name__ == "__main__":
     print("==================================================")
     
     # Menjalankan HTTP Server internal Prometheus di Port 8000
-    PORT = 8001
+    PORT = 8000
     start_http_server(PORT)
     print(f"🚀 Exporter aktif! Menyiarkan metrik di http://localhost:{PORT}/metrics")
     print(f"🔗 Menghubungkan dan mengirim data simulasi ke MLflow Serving di Port 5002...")

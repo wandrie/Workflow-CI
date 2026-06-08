@@ -5,11 +5,11 @@ import numpy as np
 
 def load_trained_model():
     # Memakai model terbaik
-    model_path = os.path.join("..", "Membangun model", "saved_models", "best_model.pkl")
+    model_path = os.path.join("..","saved_models", "best_model.pkl")
     
     if not os.path.exists(model_path):
         # Fallback jika modelnya berada di root project
-        model_path = os.path.join("Membangun model", "saved_models", "best_model.pkl")
+        model_path = os.path.join("saved_models", "best_model.pkl")
         
     if not os.path.exists(model_path):
         raise FileNotFoundError(f"❌ Model tidak ditemukan! Pastikan file 'best_model.pkl' ada di {model_path}")
