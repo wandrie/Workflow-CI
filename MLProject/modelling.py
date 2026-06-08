@@ -104,26 +104,21 @@ def log_custom_plots(y_test, y_pred, model, feature_names):
 # ============================================
 
 def train_with_autolog(X_train, X_test, y_train, y_test, model, model_name):
-    feature_names = X_train.columns.tolist()
+    mlflow.sklearn.autolog() 
     
-    # Memulai run MLflow
     with mlflow.start_run(run_name=model_name):
         model.fit(X_train, y_train)
-
+        
+        # Prediksi untuk plot kustom 
         y_pred_test = model.predict(X_test)
-
-        # Menghitung metrik eksternal untuk perbandingan
-        r2_test = r2_score(y_test, y_pred_test)
-        rmse_test = np.sqrt(mean_squared_error(y_test, y_pred_test))
         
-        # Log metrik pengujian
-        mlflow.log_metric("r2_test_score", r2_test)
-        mlflow.log_metric("rmse_test_score", rmse_test)
+        # Mencatat visualisasi kustom tambahan ke MLflow Artifacts
+        log_custom_plots(y_test, y_pred_test, model, X_train.columns)
         
-        # Unggah plot hasil evaluasi ke artifact
-        log_custom_plots(y_test, y_pred_test, model, feature_names)
+        # Hitung R2 dari model untuk logika pemilihan model terbaik
+        r2_test = model.score(X_test, y_test)
         
-        print(f" -> Berhasil: {model_name} diproses penuh oleh MLflow Autolog.")
+        print(f" -> Berhasil: {model_name} diproses oleh MLflow Autolog.")
         return model, r2_test
     
     # ============================================
@@ -140,10 +135,10 @@ if __name__ == "__main__":
     # Kandidat algoritma model
     models = {
         'Linear Regression': LinearRegression(),
-        'Ridge Regression': Ridge(alpha=1.0),
-        'Lasso Regression': Lasso(alpha=0.01),
-        'Random Forest': RandomForestRegressor(n_estimators=100, random_state=42),
-        'Gradient Boosting': GradientBoostingRegressor(n_estimators=100, random_state=42)
+        'Ridge Regression': Ridge(),
+        'Lasso Regression': Lasso(),
+        'Random Forest': RandomForestRegressor(),
+        'Gradient Boosting': GradientBoostingRegressor()
     }
     
     best_model = None
