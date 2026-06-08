@@ -7,6 +7,7 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+from pathlib import Path
 from sklearn.linear_model import LinearRegression, Ridge, Lasso
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
@@ -32,16 +33,16 @@ mlflow.sklearn.autolog(log_models=True)
 # ============================================
 
 def load_processed_data():
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    train_path = os.path.join(current_dir, "train_processed.csv")
-    test_path = os.path.join(current_dir, "test_processed.csv")
+    current_dir = Path(__file__).parent
+    train_path = current_dir / "train_processed.csv"
+    test_path = current_dir / "test_processed.csv"
 
-    if not os.path.exists(train_path) or not os.path.exists(test_path):
-        base_path = "california_housing_preprocessing"
-        train_path = os.path.join(base_path, "train_processed.csv")
-        test_path = os.path.join(base_path, "test_processed.csv")
-        
-        if not os.path.exists(train_path):
+    if not train_path.exists() or not test_path.exists():
+        base_path = Path("california_housing_preprocessing")
+        train_path = base_path / "train_processed.csv"
+        test_path = base_path / "test_processed.csv"
+
+        if not train_path.exists():
             raise FileNotFoundError(
                 f"❌ Error: File tidak ditemukan. Pastikan data preprocessing diletakkan di folder MLProject."
             )
