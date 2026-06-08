@@ -33,19 +33,14 @@ mlflow.sklearn.autolog(log_models=True)
 # ============================================
 
 def load_processed_data():
-    current_dir = Path(__file__).parent
-    train_path = current_dir / "train_processed.csv"
-    test_path = current_dir / "test_processed.csv"
-
-    if not train_path.exists() or not test_path.exists():
-        base_path = Path("california_housing_preprocessing")
-        train_path = base_path / "train_processed.csv"
-        test_path = base_path / "test_processed.csv"
-
-        if not train_path.exists():
-            raise FileNotFoundError(
-                f"❌ Error: File tidak ditemukan. Pastikan data preprocessing diletakkan di folder MLProject."
-            )
+    base_dir = Path(__file__).parent.resolve()
+    train_path = base_dir / "train_processed.csv"
+    test_path = base_dir / "test_processed.csv"
+        
+    if not train_path.exists():
+        raise FileNotFoundError(
+            f"❌ Error: File tidak ditemukan. Pastikan data preprocessing diletakkan di folder MLProject."
+        )
         
     df_train = pd.read_csv(train_path)
     df_test = pd.read_csv(test_path)
