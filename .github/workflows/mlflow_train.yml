@@ -1,4 +1,4 @@
-name: MLflow CI Training
+name: MLflow Training CI
 
 on:
   push:
@@ -10,11 +10,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Setup Python
+
+      - name: Set up Python 3.11
         uses: actions/setup-python@v4
         with:
           python-version: "3.11"
+
       - name: Install dependencies
-        run: pip install mlflow scikit-learn pandas
-      - name: Run MLflow Project
-        run: mlflow run Membangun_model/ --no-conda
+        run: |
+          pip install -r Membangun_model/requirements.txt
+
+      - name: Run MLflow Training
+        run: |
+          python Membangun_model/modelling.py
