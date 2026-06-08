@@ -102,7 +102,7 @@ def log_custom_plots(y_test, y_pred, model, feature_names):
 # ============================================
 
 def train_with_autolog(X_train, X_test, y_train, y_test, model, model_name):
-    mlflow.sklearn.autolog(log_models=True) 
+    mlflow.sklearn.autolog(log_models=True)
     
     def execute_training():
         model.fit(X_train, y_train)
@@ -110,9 +110,14 @@ def train_with_autolog(X_train, X_test, y_train, y_test, model, model_name):
         log_custom_plots(y_test, y_pred_test, model, X_train.columns)
         r2_test = model.score(X_test, y_test)
         return model, r2_test
-    
-    if mlflow.active_run():
+
+    # DETEKSI LINGKUNGAN CI/CD
+    is_ci_cd = os.getenv("GITHUB_ACTIONS") is not None
+
+    if is_ci_cd or mlflow.active_run():
+        print(f" -> CI/CD terdeteksi atau Run aktif ditemukan: {mlflow.active_run().info.run_id}")
         return execute_training()
+    
     else:
         with mlflow.start_run(run_name=model_name):
             return execute_training()
