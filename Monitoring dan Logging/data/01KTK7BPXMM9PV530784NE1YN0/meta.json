@@ -1,0 +1,18 @@
+{
+	"ulid": "01KTK7BPXMM9PV530784NE1YN0",
+	"minTime": 1780898400192,
+	"maxTime": 1780905600000,
+	"stats": {
+		"numSamples": 42904,
+		"numFloatSamples": 42904,
+		"numSeries": 31,
+		"numChunks": 317
+	},
+	"compaction": {
+		"level": 1,
+		"sources": [
+			"01KTK7BPXMM9PV530784NE1YN0"
+		]
+	},
+	"version": 1
+}
